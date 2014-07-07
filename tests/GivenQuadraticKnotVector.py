@@ -21,27 +21,96 @@ from WellBehavedPython.Engine.TestCase import TestCase
 from WellBehavedPython.api import *
 from SplineAlgorithms import findSpan
 
-
 class WithNoInternalKnots(TestCase):    
 
     def before(self):
         self.knotVector = (0, 0, 0, 1, 1, 1)
         self.degree = 3 # degree is polynomial order + 1
 
-    def test_hookedin(self):
-        assertTrue(false)
-
-    def test_then_span_at_0_is_2(self):
+    def test_then_span_at_0_is_3(self):
         # When
         span = findSpan(self.degree, 0, self.knotVector)
         
         # Then
-        expect(span).toEqual(2)
+        expect(span).toEqual(3)
 
     def test_then_span_beneath_0_is_3(self):
         # When
         span = findSpan(self.degree, -1e-5, self.knotVector)
 
         # Then
-        expect(span).toEqual(2)
+        expect(span).toEqual(3)
+
+
+    def test_then_span_at_1_is_4(self):
+        # When
+        span= findSpan(self.degree, 1, self.knotVector)
+
+        # Then
+        expect(span).toEqual(4)
+
+    def test_then_span_above_1_is_4(self):
+        # When
+        span= findSpan(self.degree, 1.0001, self.knotVector)
+
+        # Then
+        expect(span).toEqual(4)
+
+class WithOneEvenlySpacedInternalKnot(TestCase):    
+
+    def before(self):
+        self.knotVector = (0, 0, 0, 0.5, 1, 1, 1)
+        self.degree = 3 # degree is polynomial order + 1
+
+    def test_then_span_at_0_is_3(self):
+        # When
+        span = findSpan(self.degree, 0, self.knotVector)
+        
+        # Then
+        expect(span).toEqual(3)
+
+    def test_then_span_beneath_0_is_3(self):
+        # When
+        span = findSpan(self.degree, -1e-5, self.knotVector)
+
+        # Then
+        expect(span).toEqual(3)
+
+    def test_then_span_just_beneath_internal_knot_is_3(self):
+        # When
+        span = findSpan(self.degree, 0.5-1e-5, self.knotVector)
+
+        # Then
+        expect(span).toEqual(3)
+
+    def test_then_span_just_at_internal_knot_is_4(self):
+        # When
+        span = findSpan(self.degree, 0.5+1e-5, self.knotVector)
+
+        # Then
+        expect(span).toEqual(4)
+
+    def test_then_span_just_below_final_knot_is_4(self):
+        # When
+        span = findSpan(self.degree, 1-1e-5, self.knotVector)
+
+        # Then
+        expect(span).toEqual(4)
+
+
+    def test_then_span_at_1_is_5(self):
+        # When
+        span= findSpan(self.degree, 1, self.knotVector)
+
+        # Then
+        expect(span).toEqual(5)
+
+    def test_then_span_above_1_is_5(self):
+        # When
+        span= findSpan(self.degree, 1.0001, self.knotVector)
+
+        # Then
+        expect(span).toEqual(5)
+    
+
 
