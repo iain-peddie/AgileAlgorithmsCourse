@@ -32,31 +32,12 @@ def findSpan(degree, u, knotVector):
     if knotVector[0] > u:
         return degree
 
-    # i = 0;
-    # for knot in knotVector:
-    #     if knot > u:
-    #         return i
-    #     i = i + 1
+    i = 0;
+    for knot in knotVector:
+        if knot > u:
+            return i
+        i = i + 1
 
 
-    # return numSpans
-
-    while u < knotVector[mid] or knotVector[mid+1] <= u:        
-        if u < knotVector[mid]:
-#            print("u {}\n knot {}".format(u, knotVector[mid]))
-#            print("dropping high limit to {} (value {})".format(mid, knotVector[mid]))
-            high = mid
-        else:
-#            print("raising low limit to {} (value {})".format(mid, knotVector[mid]))            
-            low = mid
-        if low == high:
-            break
-        mid = int((low+high)/2)
-
-
-
-    return high
-
-
-#    return degree
+    return numSpans
     

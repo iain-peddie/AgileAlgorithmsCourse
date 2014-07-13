@@ -57,7 +57,7 @@ def createSuite():
     linearKnotSuite.add(GivenLinearKnotVector.WithNoInternalKnots.suite())
     quadraticKnotSuite.add(GivenQuadraticKnotVector.WithNoInternalKnots.suite())
     quadraticKnotSuite.add(GivenQuadraticKnotVector.WithOneEvenlySpacedInternalKnot.suite())
-    
+    quadraticKnotSuite.add(GivenQuadraticKnotVector.WithOneEvenlySpacedInternalDegenerateKnot.suite())    
     suite.add(linearKnotSuite)
     suite.add(quadraticKnotSuite)
 
