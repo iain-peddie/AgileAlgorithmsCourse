@@ -112,5 +112,58 @@ class WithOneEvenlySpacedInternalKnot(TestCase):
         # Then
         expect(span).toEqual(5)
     
+class WithOneEvenlySpacedInternalDegenerateKnot(TestCase):    
+    def before(self):
+        self.knotVector = (0, 0, 0, 0.5, 0.5, 1, 1, 1)
+        self.degree = 3 # degree is polynomial order + 1
 
 
+    def test_then_span_at_0_is_3(self):
+        # When
+        span = findSpan(self.degree, 0, self.knotVector)
+        
+        # Then
+        expect(span).toEqual(3)
+
+    def test_then_span_beneath_0_is_3(self):
+        # When
+        span = findSpan(self.degree, -1e-5, self.knotVector)
+
+        # Then
+        expect(span).toEqual(3)
+
+    def test_then_span_just_beneath_internal_knot_is_3(self):
+        # When
+        span = findSpan(self.degree, 0.5-1e-5, self.knotVector)
+
+        # Then
+        expect(span).toEqual(3)
+
+    def test_then_span_just_at_internal_knot_is_5(self):
+        # When
+        span = findSpan(self.degree, 0.5+1e-5, self.knotVector)
+
+        # Then
+        expect(span).toEqual(5)
+
+    def test_then_span_just_below_final_knot_is_5(self):
+        # When
+        span = findSpan(self.degree, 1-1e-5, self.knotVector)
+
+        # Then
+        expect(span).toEqual(5)
+
+
+    def test_then_span_at_1_is_6(self):
+        # When
+        span= findSpan(self.degree, 1, self.knotVector)
+
+        # Then
+        expect(span).toEqual(6)
+
+    def test_then_span_above_1_is_5(self):
+        # When
+        span= findSpan(self.degree, 1.0001, self.knotVector)
+
+        # Then
+        expect(span).toEqual(6)

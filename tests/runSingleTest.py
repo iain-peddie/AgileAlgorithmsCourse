@@ -5,8 +5,8 @@ from WellBehavedPython.Runners.VerboseConsoleTestRunner import VerboseConsoleTes
 import GivenQuadraticKnotVector
 
 
-case = GivenQuadraticKnotVector.WithOneEvenlySpacedInternalKnot()
-case.configureTest("test_then_span_just_below_final_knot_is_4")
+case = GivenQuadraticKnotVector.WithOneEvenlySpacedInternalDegenerateKnot()
+case.configureTest("test_then_span_just_at_internal_knot_is_5")
 
 runner = VerboseConsoleTestRunner()
 runner.run(case)
