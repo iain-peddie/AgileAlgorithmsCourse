@@ -1,3 +1,5 @@
+import numpy as np
+
 def findSpan(degree, u, knotVector):
     """Counts spans in a knot vector.
     
@@ -25,10 +27,6 @@ def findSpan(degree, u, knotVector):
     if u >= knotVector[numSpans]:
         return numSpans
 
-    # we do a binary search to speed this up
-    low = degree
-    high = numSpans
-    mid = int((low + high)/2); # need to use floor, since python doesn't have integer arithmetic                    
     if knotVector[0] > u:
         return degree
 
@@ -41,3 +39,38 @@ def findSpan(degree, u, knotVector):
 
     return numSpans
     
+def splineBasisFunctionsAtSingleParameter(span, u, degree, knotVector):
+    """Evaluates the full set of non-zero spline basis functions at a given parmeter
+    value.
+    
+    Inputs
+    ------
+    span: The span of the parameter value in the given knot vector
+    u : The parameter value to evaluate the basis functions at
+    degree: The degree of the curve
+    knotVector: The knot vector being operated on
+    
+    Returns
+    -------
+    A row vector of the non-zero basis functions evaluated at the given parameter value."""
+
+    basis = np.zeros([degree])
+    left = np.zeros([degree])
+    right = np.zeros([degree])
+    basis[0] = 1
+
+    for j in range(1, degree):
+        left[j] = u - knotVector[span - j]
+        right[j] = knotVector[span -1 + j] - u
+        saved = 0.0;
+        for r in range(0, j):
+            num = basis[r]
+            denom = right[r+1] + left[j-r]
+            temp = basis[r] / (right[r+1]+left[j-r])
+
+            basis[r] = saved + right[r+1]*temp
+            saved = left[j-r] * temp
+        
+        basis[j] = saved
+
+    return basis
