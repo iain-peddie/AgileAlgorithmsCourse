@@ -20,6 +20,9 @@
 from WellBehavedPython.Engine.TestCase import TestCase
 from WellBehavedPython.api import *
 from SplineAlgorithms import findSpan
+from SplineAlgorithms import splineBasisFunctionsAtSingleParameter
+
+import numpy as np
 
 class WithNoInternalKnots(TestCase):    
 
@@ -42,19 +45,58 @@ class WithNoInternalKnots(TestCase):
         expect(span).toEqual(3)
 
 
-    def test_then_span_at_1_is_4(self):
+    def test_then_span_at_1_is_3(self):
         # When
         span= findSpan(self.degree, 1, self.knotVector)
 
         # Then
-        expect(span).toEqual(4)
+        expect(span).toEqual(3)
 
-    def test_then_span_above_1_is_4(self):
+    def test_then_span_above_1_is_3(self):
         # When
         span= findSpan(self.degree, 1.0001, self.knotVector)
 
         # Then
-        expect(span).toEqual(4)
+        expect(span).toEqual(3)
+
+    def test_splineBasisFunctions_at_0_equal_bernstein_polynomials_at_0(self):
+        # When
+        parameter = 0
+        span = 3
+        
+        basisValues = splineBasisFunctionsAtSingleParameter(span, parameter, self.degree, self.knotVector)
+
+        # Then
+        expectedBasisValues = np.array([1, 0, 0])
+
+        expect(basisValues).toEqual(expectedBasisValues)
+
+    def test_splineBasisFunctions_at_0p5_equal_bernstein_polynomials_at_0p5(self):
+        
+        # When
+        parameter = 0.5
+        span = 3
+        
+        basisValues = splineBasisFunctionsAtSingleParameter(span, parameter, self.degree, self.knotVector)
+
+        # Then
+        expectedBasisValues = np.array([1/4, 1/2, 1/4])
+
+        expect(basisValues).toEqual(expectedBasisValues)
+
+
+    def test_splineBasisFunctions_at_1_equal_bernstein_polynomials_at_1(self):
+        # When
+        parameter = 1
+        span = 3
+        
+        basisValues = splineBasisFunctionsAtSingleParameter(span, parameter, self.degree, self.knotVector)
+
+        # Then
+        expectedBasisValues = np.array([0, 0, 1])
+
+        expect(basisValues).toEqual(expectedBasisValues)    
+
 
 class WithOneEvenlySpacedInternalKnot(TestCase):    
 
@@ -98,19 +140,64 @@ class WithOneEvenlySpacedInternalKnot(TestCase):
         expect(span).toEqual(4)
 
 
-    def test_then_span_at_1_is_5(self):
+    def test_then_span_at_1_is_4(self):
         # When
         span= findSpan(self.degree, 1, self.knotVector)
 
         # Then
-        expect(span).toEqual(5)
+        expect(span).toEqual(4)
 
-    def test_then_span_above_1_is_5(self):
+    def test_then_span_above_1_is_4(self):
         # When
         span= findSpan(self.degree, 1.0001, self.knotVector)
 
         # Then
-        expect(span).toEqual(5)
+        expect(span).toEqual(4)
+
+    def test_splineBasisFunctions_at_0_equal_bernstein_polynomials_at_0(self):
+        # When
+        parameter = 0
+        span = 3
+        
+        basisValues = splineBasisFunctionsAtSingleParameter(span, parameter, self.degree, self.knotVector)
+
+        # Then
+        expectedBasisValues = np.array([1, 0, 0])
+
+        expect(basisValues).toEqual(expectedBasisValues)
+
+    def test_splineBasisFunctions_just_under_0p25_equal_bernstein_polynomials_at_0p5(self):
+        
+        # When
+        parameter = 0.25
+        span = 3
+        
+        basisValues = splineBasisFunctionsAtSingleParameter(span, parameter, self.degree, self.knotVector)        
+
+        # Then
+
+        # (1-2u)^2 2u(2-3u) 2u^2
+
+        expectedBasisValues = np.array([2/8, 5/8, 1/8])
+
+        expect(basisValues).toEqual(expectedBasisValues)
+
+
+    def test_splineBasisFunctions_at_0p5_equal_bernstein_polynomials_at_1(self):
+        # When
+        parameter = 0.5
+        span = 3
+        
+        basisValues = splineBasisFunctionsAtSingleParameter(span, parameter, self.degree, self.knotVector)
+
+        # Then
+        # (1-2u)^2 2u(2-3u) 2u^2
+        expectedBasisValues = np.array([0, 1/2, 1/2])
+
+        expect(basisValues).toEqual(expectedBasisValues)    
+
+
+
     
 class WithOneEvenlySpacedInternalDegenerateKnot(TestCase):    
     def before(self):
@@ -154,16 +241,16 @@ class WithOneEvenlySpacedInternalDegenerateKnot(TestCase):
         expect(span).toEqual(5)
 
 
-    def test_then_span_at_1_is_6(self):
+    def test_then_span_at_1_is_5(self):
         # When
         span= findSpan(self.degree, 1, self.knotVector)
 
         # Then
-        expect(span).toEqual(6)
+        expect(span).toEqual(5)
 
     def test_then_span_above_1_is_5(self):
         # When
         span= findSpan(self.degree, 1.0001, self.knotVector)
 
         # Then
-        expect(span).toEqual(6)
+        expect(span).toEqual(5)
