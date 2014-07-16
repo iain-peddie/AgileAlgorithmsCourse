@@ -45,19 +45,19 @@ class WithNoInternalKnots(TestCase):
         expect(span).toEqual(3)
 
 
-    def test_then_span_at_1_is_4(self):
+    def test_then_span_at_1_is_3(self):
         # When
         span= findSpan(self.degree, 1, self.knotVector)
 
         # Then
-        expect(span).toEqual(4)
+        expect(span).toEqual(3)
 
-    def test_then_span_above_1_is_4(self):
+    def test_then_span_above_1_is_3(self):
         # When
         span= findSpan(self.degree, 1.0001, self.knotVector)
 
         # Then
-        expect(span).toEqual(4)
+        expect(span).toEqual(3)
 
     def test_splineBasisFunctions_at_0_equal_bernstein_polynomials_at_0(self):
         # When
@@ -140,19 +140,19 @@ class WithOneEvenlySpacedInternalKnot(TestCase):
         expect(span).toEqual(4)
 
 
-    def test_then_span_at_1_is_5(self):
+    def test_then_span_at_1_is_4(self):
         # When
         span= findSpan(self.degree, 1, self.knotVector)
 
         # Then
-        expect(span).toEqual(5)
+        expect(span).toEqual(4)
 
-    def test_then_span_above_1_is_5(self):
+    def test_then_span_above_1_is_4(self):
         # When
         span= findSpan(self.degree, 1.0001, self.knotVector)
 
         # Then
-        expect(span).toEqual(5)
+        expect(span).toEqual(4)
 
     
 class WithOneEvenlySpacedInternalDegenerateKnot(TestCase):    
@@ -197,16 +197,16 @@ class WithOneEvenlySpacedInternalDegenerateKnot(TestCase):
         expect(span).toEqual(5)
 
 
-    def test_then_span_at_1_is_6(self):
+    def test_then_span_at_1_is_5(self):
         # When
         span= findSpan(self.degree, 1, self.knotVector)
 
         # Then
-        expect(span).toEqual(6)
+        expect(span).toEqual(5)
 
     def test_then_span_above_1_is_5(self):
         # When
         span= findSpan(self.degree, 1.0001, self.knotVector)
 
         # Then
-        expect(span).toEqual(6)
+        expect(span).toEqual(5)

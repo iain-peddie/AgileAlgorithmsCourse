@@ -25,7 +25,7 @@ def findSpan(degree, u, knotVector):
     numSpans = numKnots - (degree - 1)
 
     if u >= knotVector[numSpans]:
-        return numSpans
+        return numSpans - 1
 
     if knotVector[0] > u:
         return degree

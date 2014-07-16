@@ -44,19 +44,19 @@ class WithNoInternalKnots(TestCase):
         # Then
         expect(span).toEqual(2)
 
-    def test_then_span_at_1_is_3(self):
+    def test_then_span_at_1_is_2(self):
         # When
         span= findSpan(self.degree, 1, self.knotVector)
 
         # Then
-        expect(span).toEqual(3)
+        expect(span).toEqual(2)
 
-    def test_then_span_above_1_is_3(self):
+    def test_then_span_above_1_is_2(self):
         # When
         span= findSpan(self.degree, 1.0001, self.knotVector)
 
         # Then
-        expect(span).toEqual(3)
+        expect(span).toEqual(2)
 
     def test_splineBasisFunctions_at_0_equal_bernstein_polynomials_at_0(self):
         # When
