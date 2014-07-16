@@ -71,7 +71,7 @@ class WithNoInternalKnots(TestCase):
 
         expect(basisValues).toEqual(expectedBasisValues)
 
-    def test_splineBasisFunctions_at_0p5_equal_bernstein_polynomials_at_1(self):
+    def test_splineBasisFunctions_at_0p5_equal_bernstein_polynomials_at_0p5(self):
         
         # When
         parameter = 0.5
@@ -153,6 +153,50 @@ class WithOneEvenlySpacedInternalKnot(TestCase):
 
         # Then
         expect(span).toEqual(4)
+
+    def test_splineBasisFunctions_at_0_equal_bernstein_polynomials_at_0(self):
+        # When
+        parameter = 0
+        span = 3
+        
+        basisValues = splineBasisFunctionsAtSingleParameter(span, parameter, self.degree, self.knotVector)
+
+        # Then
+        expectedBasisValues = np.array([1, 0, 0])
+
+        expect(basisValues).toEqual(expectedBasisValues)
+
+    def test_splineBasisFunctions_just_under_0p25_equal_bernstein_polynomials_at_0p5(self):
+        
+        # When
+        parameter = 0.25
+        span = 3
+        
+        basisValues = splineBasisFunctionsAtSingleParameter(span, parameter, self.degree, self.knotVector)        
+
+        # Then
+
+        # (1-2u)^2 2u(2-3u) 2u^2
+
+        expectedBasisValues = np.array([2/8, 5/8, 1/8])
+
+        expect(basisValues).toEqual(expectedBasisValues)
+
+
+    def test_splineBasisFunctions_at_0p5_equal_bernstein_polynomials_at_1(self):
+        # When
+        parameter = 0.5
+        span = 3
+        
+        basisValues = splineBasisFunctionsAtSingleParameter(span, parameter, self.degree, self.knotVector)
+
+        # Then
+        # (1-2u)^2 2u(2-3u) 2u^2
+        expectedBasisValues = np.array([0, 1/2, 1/2])
+
+        expect(basisValues).toEqual(expectedBasisValues)    
+
+
 
     
 class WithOneEvenlySpacedInternalDegenerateKnot(TestCase):    
