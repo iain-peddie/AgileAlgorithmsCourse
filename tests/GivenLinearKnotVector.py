@@ -20,6 +20,7 @@
 from WellBehavedPython.Engine.TestCase import TestCase
 from WellBehavedPython.api import *
 from SplineAlgorithms import findSpan
+from SplineAlgorithms import splineBasisFunctions
 from SplineAlgorithms import splineBasisFunctionsAtSingleParameter
 
 import numpy as np
@@ -93,6 +94,18 @@ class WithNoInternalKnots(TestCase):
         # Then
         expectedBasisValues = np.array([0, 1])
 
+        expect(basisValues).toEqual(expectedBasisValues)
+
+    def test_splineBasisFunctions_for_range_0_to_1_4_elements(self):
+        # When
+        parameters = np.linspace(0,1,4)
+        basisValues = splineBasisFunctions(parameters, self.degree, self.knotVector)
+
+        # Then
+        expectedBasisValues = np.array([[ 1, 0], 
+                                        [2/3, 1/3],
+                                        [1/3, 2/3],
+                                        [0, 1]])
         expect(basisValues).toEqual(expectedBasisValues)
 
 

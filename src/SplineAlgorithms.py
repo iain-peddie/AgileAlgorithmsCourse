@@ -38,6 +38,39 @@ def findSpan(degree, u, knotVector):
 
 
     return numSpans
+
+def splineBasisFunctions(parameters, degree, knotVector):
+    """Evaluates the full set of all basis functions at a set of given parameters.
+    The benefit of this is that a set of points on a spline can then be
+    expressed as splineBasisFunctins(p, d, k) * ControlPoints as a matrix mulitplication
+    operation.
+
+    Inputs
+    ------
+    u : The parameter value to evaluate the basis functions at
+    degree: The degree of the curve
+    knotVector: The knot vector being operated on
+
+    Returns
+    -------
+    A 2d array. The first index corresponds to parameters. The second index corresponds
+    to basis function index.
+
+    Notes
+    -----
+    This function uses findSpan to get the span. So passing one parameter in gives
+    the same answer as splineBasisFucntionsAtSingleParamterm but as a matrix rather than
+    a row vector. This assumes that the corect span would have been passed to the single parameter
+    version
+"""
+    basis = np.zeros([len(parameters), degree])
+    for i in range(0,len(parameters)):
+        u = parameters[i]
+        span = findSpan(degree, u, knotVector)
+        basisForParam = splineBasisFunctionsAtSingleParameter(span, u, degree, knotVector)
+        basis[i] = basisForParam
+
+    return basis
     
 def splineBasisFunctionsAtSingleParameter(span, u, degree, knotVector):
     """Evaluates the full set of non-zero spline basis functions at a given parmeter
