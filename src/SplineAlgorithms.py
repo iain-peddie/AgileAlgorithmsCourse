@@ -63,12 +63,13 @@ def splineBasisFunctions(parameters, degree, knotVector):
     a row vector. This assumes that the corect span would have been passed to the single parameter
     version
 """
-    basis = np.zeros([len(parameters), degree])
+    numBasis = len(knotVector) - degree
+    basis = np.zeros([len(parameters), numBasis])
     for i in range(0,len(parameters)):
         u = parameters[i]
         span = findSpan(degree, u, knotVector)
         basisForParam = splineBasisFunctionsAtSingleParameter(span, u, degree, knotVector)
-        basis[i] = basisForParam
+        basis[i,span-degree:span] = basisForParam
 
     return basis
     

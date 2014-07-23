@@ -8,7 +8,8 @@ class NumpyExpectations(BaseExpect):
 
     def toEqual(self, expected):
         if self.actual.shape != expected.shape:
-            self.fail("Shapes are not the same")
+            message = "Sapes are not the same {}, {}".format(self.actual.shape, expected.shape)
+            self.fail(message)
             return
 
         shape = expected.shape
