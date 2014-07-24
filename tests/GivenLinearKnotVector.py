@@ -20,6 +20,7 @@
 from WellBehavedPython.Engine.TestCase import TestCase
 from WellBehavedPython.api import *
 from SplineAlgorithms import findSpan
+from SplineAlgorithms import splineBasisFunctions
 from SplineAlgorithms import splineBasisFunctionsAtSingleParameter
 
 import numpy as np
@@ -95,5 +96,63 @@ class WithNoInternalKnots(TestCase):
 
         expect(basisValues).toEqual(expectedBasisValues)
 
+    def test_splineBasisFunctions_for_range_0_to_1_with_4_elements(self):
+        # When
+        parameters = np.linspace(0,1,4)
+        basisValues = splineBasisFunctions(parameters, self.degree, self.knotVector)
+
+        # Then
+        expectedBasisValues = np.array([[ 1, 0], 
+                                        [2/3, 1/3],
+                                        [1/3, 2/3],
+                                        [0, 1]])
+        expect(basisValues).toEqual(expectedBasisValues)
+
 
     
+class WithOneEvenlySpacedInternalKnot(TestCase):    
+
+    def before(self):
+        self.knotVector = (0, 0, 1/2, 1, 1)
+        self.degree = 2 # degree is polynomial order + 1
+
+    def test_splineBasisFunctions_for_range_0_to_1_with_5_elements(self):
+        # 5 elements gives us each end of each knot span, and one point
+        # i the middle
+
+        parameters = np.linspace(0,1,5)
+        basisValues = splineBasisFunctions(parameters, self.degree, self.knotVector)
+        
+        # Then
+        # (1+2u),2u,0 for 0 <= u < 1/2
+        # 0  , 2(1-u), 2u - 1 for 1/2 <= u < 1
+        expectedBasisValues = np.array([[1, 0, 0],
+                                       [1/2, 1/2, 0], 
+                                       [0, 1, 0],
+                                        [0, 1/2, 1/2],
+                                        [0, 0, 1]])
+
+        expect(basisValues).toEqual(expectedBasisValues)
+
+class WithOneEvenlySpacedInternalDegenerateKnot(TestCase):
+
+    def before(self):
+        self.knotVector = (0, 0, 1/2, 1/2, 1, 1)
+        self.degree = 2 # degree is polynomial order + 1
+
+
+    def test_splineBasisFunctions_for_range_0_to_1_with_5_elements(self):
+        # 5 elements gives us each end of each knot span, and one point
+        # i the middle
+
+        parameters = np.linspace(0,1,5)
+        basisValues = splineBasisFunctions(parameters, self.degree, self.knotVector)
+        
+        # Then
+        # (1+2u),2u,0,0 for 0 <= u < 1/2
+        # 0  ,0 2(1-u), 2u - 1 for 1/2 <= u < 1
+        expectedBasisValues = np.array([[1, 0, 0, 0],
+                                        [1/2, 1/2, 0, 0], 
+                                        [0, 0, 1, 0],
+                                        [0, 0, 1/2, 1/2],
+                                        [0, 0, 0, 1]])
