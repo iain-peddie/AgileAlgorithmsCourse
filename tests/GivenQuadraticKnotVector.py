@@ -209,6 +209,20 @@ class WithOneEvenlySpacedInternalKnot(TestCase):
 
         expect(basisValues).toEqual(expectedBasisValues)    
 
+    def test_splineBasisFunctions_for_range_0_to_1_with_5_elements(self):
+        # When
+        parameters = np.linspace(0,1,5)
+        basisValues = splineBasisFunctions(parameters, self.degree, self.knotVector)
+
+        # Then
+        # (1-2u)^2, 2u(2-3u), 2u^2, 0 for 0 <= u < 1/2
+        # 0, 2(1-u)^2, 2(1-u)(3u-1), (2u-1)^2 for 1/2 <= u < 1
+        expectedBasisValues = np.array([[ 1, 0, 0, 0], 
+                                        [2/8, 5/8, 1/8, 0],
+                                        [0, 1/2, 1/2, 0],
+                                        [0, 1/8, 5/8, 2/8], 
+                                        [0, 0, 0, 1]])
+        expect(basisValues).toEqual(expectedBasisValues)
 
 
     
