@@ -39,6 +39,27 @@ def findSpan(degree, u, knotVector):
 
     return numSpans
 
+def bernsteinFunctions(parameters, degree):
+    """Evaluates all the Bernstein functions of the given degree,
+    at the given parameter values.
+
+    Inputs
+    ------
+    parameters : The parameter values to evaluate the basis functions at
+    degree: The degree of the curve
+
+    Returns
+    -------
+    A 2d array. The first index corresponds to parameters. The second index corresponds
+    to basis function index.
+    """
+    
+    firstHalf = np.zeros(degree)
+    secondHalf = np.ones(degree)
+
+    knotVector = np.concatenate((firstHalf, secondHalf))
+    return splineBasisFunctions(parameters, degree, knotVector)
+
 def splineBasisFunctions(parameters, degree, knotVector):
     """Evaluates the full set of all basis functions at a set of given parameters.
     The benefit of this is that a set of points on a spline can then be
@@ -47,7 +68,7 @@ def splineBasisFunctions(parameters, degree, knotVector):
 
     Inputs
     ------
-    u : The parameter value to evaluate the basis functions at
+    parameters : The parameter values to evaluate the basis functions at
     degree: The degree of the curve
     knotVector: The knot vector being operated on
 
