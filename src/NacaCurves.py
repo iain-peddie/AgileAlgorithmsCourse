@@ -35,9 +35,11 @@ def create4DigitNacaAerofoil(camber, position, thickness, xValues):
     Returns
     --------
     A dictionary with the following fields:
-       upperSurface : The upper surface points, a 2d array
-       lowerSurface : The lower surface points, a 2d array
+       upperSurface : The upper surface points, a 2d array (x and y)
+       lowerSurface : The lower surface points, a 2d array 
        anticlockwise: The full points, anticlockwise from the trailing edge
+       camber : The camber profile, as a 2d array ( x and camber at that x)
+       thickness : The thickness distribution as as a 2d array ( x and thickness at that x)
     
     Notes
     -----
