@@ -20,6 +20,7 @@
 from WellBehavedPython.Engine.TestCase import TestCase
 from WellBehavedPython.api import *
 from SplineAlgorithms import bernsteinFunctions
+from NacaCurves import create4DigitNacaAerofoil
 
 import numpy as np
 
@@ -53,4 +54,45 @@ class GivenNothing(TestCase):
                                    [0, 0, 1]])
         expect(values).toEqual(expectedValues)
 
+    def test_that_00xx_naca_curve_is_symmetric(self):
+        # Where
+        x = np.linspace(0, 1, 11)
+        
+        # When
+        aerofoil = create4DigitNacaAerofoil(0, 0, 12, x)
 
+        # Then
+        
+        upperY = aerofoil['upper'][:, 1]
+        lowerY = aerofoil['lower'][:, 1]
+
+        upperX = aerofoil['upper'][:, 0]
+        lowerX = aerofoil['lower'][:, 0]
+        meanY = upperY + lowerY
+
+        expect(-upperY).toEqual(lowerY)
+        expect(upperX).toEqual(lowerX)
+
+    def test_that_yzxx_naca_curve_is_asymmetric(self):
+        # Where
+        x = np.linspace(0, 1, 11)
+        
+        # When
+        aerofoil = create4DigitNacaAerofoil(4, 4, 12, x)
+
+        # Then
+        
+        upperY = aerofoil['upper'][:, 1]
+        lowerY = aerofoil['lower'][:, 1]
+
+        upperX = aerofoil['upper'][:, 0]
+        lowerX = aerofoil['lower'][:, 0]
+        meanY = upperY + lowerY
+
+        expectedCamber= np.array([0, 0.035, 0.06, 0.075, 0.0799, 0.077, 0.0711, 0.06, 0.0444, 0.0244, 0.0])
+
+        # low tolerance to match precision of output in avove array
+        expect(upperY + lowerY).withTolerance(1e-2).toEqual(expectedCamber) 
+
+        # x_U and x_L get shifted by compensating amounts: x{U,L} = x \pm t sin\theta, so xU + xL = 2x
+        expect((upperX+lowerX)/2).withTolerance(1e-3).toEqual(x)
