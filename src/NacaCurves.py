@@ -153,6 +153,9 @@ def _combineSurfaces(upperSurface, lowerSurface):
     meaning as for the inputs."""
 
     upperReverse = np.flipud(upperSurface);
-    return np.vstack([upperReverse, lowerSurface])
+    
+    # remove the last point from the  upper surface, as it should be the same as
+    # the first point on the lower surface
+    return np.vstack([upperReverse[0:-1, :], lowerSurface])
     
    
