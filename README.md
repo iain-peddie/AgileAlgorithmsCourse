@@ -1,4 +1,4 @@
 AgileAlgorithmsCourse
 =====================
 
-Basic helper functions for 1 dat agile development of algorithms training course
+Functions to provide starting example data, and possible extra data for a 1-day course in performing algorithm development in an agile way.
