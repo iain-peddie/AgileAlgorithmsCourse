@@ -92,7 +92,7 @@ class GivenNothing(TestCase):
         expectedCamber= np.array([0, 0.035, 0.06, 0.075, 0.0799, 0.077, 0.0711, 0.06, 0.0444, 0.0244, 0.0])
 
         # low tolerance to match precision of output in avove array
-        expect(upperY + lowerY).withTolerance(1e-2).toEqual(expectedCamber) 
+        expect(upperY + lowerY).toBeCloseTo(expectedCamber, absoluteTolerance = 1e-2) 
 
         # x_U and x_L get shifted by compensating amounts: x{U,L} = x \pm t sin\theta, so xU + xL = 2x
-        expect((upperX+lowerX)/2).withTolerance(1e-3).toEqual(x)
+        expect((upperX+lowerX)/2).toBeCloseTo(x, absoluteTolerance = 1e-3)

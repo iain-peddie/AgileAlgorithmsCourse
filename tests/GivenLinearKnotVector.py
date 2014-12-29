@@ -106,7 +106,7 @@ class WithNoInternalKnots(TestCase):
                                         [2/3, 1/3],
                                         [1/3, 2/3],
                                         [0, 1]])
-        expect(basisValues).toEqual(expectedBasisValues)
+        expect(basisValues).toBeCloseTo(expectedBasisValues)
 
 
     

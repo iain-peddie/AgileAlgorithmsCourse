@@ -22,16 +22,15 @@ import sys
 from WellBehavedPython.Engine.TestSuite import TestSuite
 from WellBehavedPython.Runners.VerboseConsoleTestRunner import VerboseConsoleTestRunner
 from WellBehavedPython.api import registerExpectationClass, discoverTests
+from WellBehavedPython.Expectations.Numpy.ArrayExpectations import ArrayExpectations
 
-
-from NumpyExpectations import NumpyExpectations
 import numpy as np
 
 def main(suite):
     try:
 
         registerExpectationClass(lambda actual: isinstance(actual, np.ndarray),
-                                 NumpyExpectations)
+                                 ArrayExpectations)
                 
         suite = createSuite()
         
@@ -60,7 +59,6 @@ def createSuite():
 
     suite.add(linearKnotSuite)
     suite.add(quadraticKnotSuite)
-
     suite.add(nothingSuite)
     
     return suite

@@ -1,3 +1,5 @@
 __pycache__
 *~
-.ipynb*
+.ipynb*tests/Add bump.ipynb
+tests/Add bump.ipynb
+.ipynb_checkpoints
