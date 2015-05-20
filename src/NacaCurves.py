@@ -62,8 +62,13 @@ def create4DigitNacaAerofoil(camber, position, thickness, xValues):
     xl = x + xt[:,1] * np.sin(theta)
     yl = xc[:,1] - xt[:,1] * np.cos(theta)
 
-    upperSurface = np.vstack((xu, yu)).transpose()
-    lowerSurface = np.vstack((xl, yl)).transpose()
+    upperSurface = _combineSurface(xu, yu)
+    lowerSurface = _combineSurface(xl, yl)
+
+#    upperSurface = np.vstack((xu, yu)).transpose()
+#    lowerSurface = np.vstack((xl, yl)).transpose()
+
+    
 
     anticlockwise = _combineSurfaces(upperSurface, lowerSurface)
 
@@ -72,6 +77,24 @@ def create4DigitNacaAerofoil(camber, position, thickness, xValues):
              'upper' : upperSurface, 
              'lower' : lowerSurface, 
              'anticlockwise' : anticlockwise }
+
+def _combineSurface(xValues, yValues):
+    """Combines xValues and yValues into a single array.
+    
+    Inputs
+    ------
+    xValues : An array of x values  This should have the same shape as yVales.
+    yValues : An array of y values. This should have the same shape as xValues."""
+
+    x0 = min(xValues)
+    x1 = max(xValues)
+
+    chordLength = x1 - x0
+
+    xOnChord = (xValues - x0)/chordLength;
+    yOnChord = yValues / chordLength;
+
+    return np.vstack((xOnChord, yOnChord)).transpose()
 
 def _createCamberDistribution(position, maximum, x):
     m = maximum / 100
