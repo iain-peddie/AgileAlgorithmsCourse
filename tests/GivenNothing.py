@@ -19,8 +19,8 @@
 
 from WellBehavedPython.Engine.TestCase import TestCase
 from WellBehavedPython.api import *
-from SplineAlgorithms import bernsteinFunctions
 from NacaCurves import create4DigitNacaAerofoil
+from SplineAlgorithms import bernsteinFunctions
 
 import numpy as np
 

@@ -26,6 +26,9 @@ from WellBehavedPython.Expectations.Numpy.ArrayExpectations import ArrayExpectat
 
 import numpy as np
 
+sys.path.append("../src")
+
+
 def main(suite):
     try:
 
@@ -52,7 +55,7 @@ def main(suite):
     
 def createSuite():
 
-    suite = TestSuite("WellBehavedPythonTests")
+    suite = TestSuite("AgileAlgorithmsCourseTests")
     nothingSuite = discoverTests("GivenNothing")
     linearKnotSuite = discoverTests("GivenLinearKnotVector")
     quadraticKnotSuite = discoverTests("GivenQuadraticKnotVector")
